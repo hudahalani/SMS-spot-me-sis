@@ -1,0 +1,10 @@
+[33m2463234[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m pls work
+[33mb040b70[m still testing
+[33m1f86779[m test
+[33mce732c2[m Revert "Fix camera access for production - remove restrictive headers and improve error handling"
+[33m23c15ec[m Fix camera access for production - remove restrictive headers and improve error handling
+[33ma16f577[m Simplify camera implementation and remove error display
+[33mee1a674[m tryna fix vercel camera
+[33m6ec4d11[m Fix progress tracker images - move all exercise images to public/images directory
+[33mbccbe3a[m Fix image paths for production build - move images to public/images directory
+[33m25340a4[m changed voice from man to woman

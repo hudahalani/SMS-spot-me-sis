@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
+import { IonApp, IonPage } from '@ionic/react';
 import { CoachSelector } from './components/CoachSelector';
 import { CameraView } from './components/CameraView';
 import { FeedbackBubble } from './components/FeedbackBubble';
@@ -174,187 +175,189 @@ function App() {
     setProgressPhotos(demoPhotos);
   }, []);
 
-    return (
-    <>
-      {currentView === 'homepage-image' ? (
-        <HomePageImage onGetStarted={handleGetStarted} />
-      ) : (
-        <PhoneFrame>
-          <div className="h-full bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 overflow-hidden">
-            <Toaster />
-            
-                                                                        {/* Header - Only show on landing page */}
-             
+  return (
+    <IonApp>
+      <IonPage>
+        {currentView === 'homepage-image' ? (
+          <HomePageImage onGetStarted={handleGetStarted} />
+        ) : (
+          <PhoneFrame>
+            <div className="h-full bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 overflow-hidden">
+              <Toaster />
+              
+              {/* Header - Only show on landing page */}
+              
 
-          <main className="h-full">
-            <AnimatePresence mode="wait">
-              {currentView === 'landing' && (
-              <motion.div
-                key="landing"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <LandingPage
-                  onStartWorkout={handleStartWorkout}
-                  onViewProgress={handleViewProgress}
-                  onSetReminders={() => setCurrentView('reminder-setup')}
-                />
-              </motion.div>
-            )}
-
-            {currentView === 'coach-selection' && (
-              <motion.div
-                key="coach-selection"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                <CoachSelector
-                  selectedCoach={selectedCoach}
-                  onSelectCoach={handleCoachSelect}
-                />
-              </motion.div>
-            )}
-
-            {currentView === 'workout' && selectedCoach && (
-              <motion.div
-                key="workout"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                className="px-4 pb-16 h-full overflow-hidden pt-6"
-              >
-                {/* Navigation - Moved to top */}
-                <div className="flex justify-center gap-4 mb-6">
-                  <motion.button
-                    onClick={() => setCurrentView('coach-selection')}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-4 py-2 bg-pink-200 text-pink-800 border border-pink-300 rounded-full shadow-lg font-medium text-sm"
+              <main className="h-full">
+                <AnimatePresence mode="wait">
+                  {currentView === 'landing' && (
+                  <motion.div
+                    key="landing"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    ← Back to Coaches
-                  </motion.button>
-                  <motion.button
-                    onClick={() => setCurrentView('landing')}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-4 py-2 bg-white text-gray-700 rounded-full shadow-lg font-medium text-sm"
+                    <LandingPage
+                      onStartWorkout={handleStartWorkout}
+                      onViewProgress={handleViewProgress}
+                      onSetReminders={() => setCurrentView('reminder-setup')}
+                    />
+                  </motion.div>
+                )}
+
+                {currentView === 'coach-selection' && (
+                  <motion.div
+                    key="coach-selection"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    Back to Home
-                  </motion.button>
-                </div>
+                    <CoachSelector
+                      selectedCoach={selectedCoach}
+                      onSelectCoach={handleCoachSelect}
+                    />
+                  </motion.div>
+                )}
 
-                <div className="space-y-6">
-                  <CameraView
-                    key={selectedCoach.id} // Force re-initialization when coach changes
-                    coach={selectedCoach}
-                    onFeedback={handleFeedback}
-                    onFormUpdate={handleFormUpdate}
-                    currentExercise={currentExercise}
-                    isWorkoutActive={isWorkoutActive}
-                  />
-                  
-                  <WorkoutControls
-                    isActive={isWorkoutActive}
-                    isPaused={isWorkoutPaused}
-                    onStart={startWorkout}
-                    onPause={pauseWorkout}
-                    onStop={stopWorkout}
-                    onCapture={capturePhoto}
-                  />
+                {currentView === 'workout' && selectedCoach && (
+                  <motion.div
+                    key="workout"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    className="px-4 pb-16 h-full overflow-hidden pt-6"
+                  >
+                    {/* Navigation - Moved to top */}
+                    <div className="flex justify-center gap-4 mb-6">
+                      <motion.button
+                        onClick={() => setCurrentView('coach-selection')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-4 py-2 bg-pink-200 text-pink-800 border border-pink-300 rounded-full shadow-lg font-medium text-sm"
+                      >
+                        ← Back to Coaches
+                      </motion.button>
+                      <motion.button
+                        onClick={() => setCurrentView('landing')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-4 py-2 bg-white text-gray-700 rounded-full shadow-lg font-medium text-sm"
+                      >
+                        Back to Home
+                      </motion.button>
+                    </div>
 
-                  <ProgressTracker
-                    photos={progressPhotos}
-                    currentSession={currentSession}
-                    realTimeFormScore={formScore}
-                    isInSquatPosition={isInExercisePosition}
-                    isWorkoutActive={isWorkoutActive}
-                  />
-                </div>
-              </motion.div>
-            )}
+                    <div className="space-y-6">
+                      <CameraView
+                        key={selectedCoach.id} // Force re-initialization when coach changes
+                        coach={selectedCoach}
+                        onFeedback={handleFeedback}
+                        onFormUpdate={handleFormUpdate}
+                        currentExercise={currentExercise}
+                        isWorkoutActive={isWorkoutActive}
+                      />
+                      
+                      <WorkoutControls
+                        isActive={isWorkoutActive}
+                        isPaused={isWorkoutPaused}
+                        onStart={startWorkout}
+                        onPause={pauseWorkout}
+                        onStop={stopWorkout}
+                        onCapture={capturePhoto}
+                      />
 
-                         {currentView === 'progress-gallery' && (
-               <motion.div
-                 key="progress-gallery"
-                 initial={{ opacity: 0, x: 300 }}
-                 animate={{ opacity: 1, x: 0 }}
-                 exit={{ opacity: 0, x: -300 }}
-                 transition={{ duration: 0.3 }}
-                 className="h-full overflow-hidden"
-               >
-                 <div className="flex items-center justify-between p-3 border-b border-gray-100 bg-white">
-                   <motion.button
-                     onClick={() => setCurrentView('landing')}
-                     whileHover={{ scale: 1.05 }}
-                     whileTap={{ scale: 0.95 }}
-                     className="px-3 py-1.5 bg-pink-200 text-pink-800 border border-pink-300 rounded-full shadow-sm font-medium text-xs"
-                   >
-                     ← Back
-                   </motion.button>
-                   <h2 className="text-lg font-bold text-gray-800">Progress Gallery 📊</h2>
-                   <div className="w-12"></div>
-                 </div>
-                 <div className="h-full overflow-y-auto">
-                   <ProgressGallery
-                     photos={progressPhotos}
-                     isOpen={true}
-                     onClose={() => setCurrentView('landing')}
-                     selectedPhoto={progressView.selectedPhoto}
-                     onSelectPhoto={(photo) => setProgressView({ ...progressView, selectedPhoto: photo })}
-                   />
-                 </div>
-               </motion.div>
-             )}
+                      <ProgressTracker
+                        photos={progressPhotos}
+                        currentSession={currentSession}
+                        realTimeFormScore={formScore}
+                        isInSquatPosition={isInExercisePosition}
+                        isWorkoutActive={isWorkoutActive}
+                      />
+                    </div>
+                  </motion.div>
+                )}
 
-                         {currentView === 'reminder-setup' && (
-               <motion.div
-                 key="reminder-setup"
-                 initial={{ opacity: 0, x: 300 }}
-                 animate={{ opacity: 1, x: 0 }}
-                 exit={{ opacity: 0, x: -300 }}
-                 transition={{ duration: 0.3 }}
-                 className="h-full overflow-hidden"
-               >
-                 <div className="flex items-center justify-between p-3 border-b border-gray-100 bg-white">
-                   <motion.button
-                     onClick={() => setCurrentView('landing')}
-                     whileHover={{ scale: 1.05 }}
-                     whileTap={{ scale: 0.95 }}
-                     className="px-3 py-1.5 bg-pink-200 text-pink-800 border border-pink-300 rounded-full shadow-sm font-medium text-xs"
-                   >
-                     ← Back
-                   </motion.button>
-                   <h2 className="text-lg font-bold text-gray-800">Daily Reminders ⏰</h2>
-                   <div className="w-12"></div>
-                 </div>
-                 <div className="h-full overflow-y-auto">
-                   <ReminderSetup
-                     isOpen={true}
-                     onClose={() => setCurrentView('landing')}
-                   />
-                 </div>
-               </motion.div>
-             )}
-          </AnimatePresence>
-        </main>
+                {currentView === 'progress-gallery' && (
+                  <motion.div
+                    key="progress-gallery"
+                    initial={{ opacity: 0, x: 300 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -300 }}
+                    transition={{ duration: 0.3 }}
+                    className="h-full overflow-hidden"
+                  >
+                    <div className="flex items-center justify-between p-3 border-b border-gray-100 bg-white">
+                      <motion.button
+                        onClick={() => setCurrentView('landing')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-3 py-1.5 bg-pink-200 text-pink-800 border border-pink-300 rounded-full shadow-sm font-medium text-xs"
+                      >
+                        ← Back
+                      </motion.button>
+                      <h2 className="text-lg font-bold text-gray-800">Progress Gallery 📊</h2>
+                      <div className="w-12"></div>
+                    </div>
+                    <div className="h-full overflow-y-auto">
+                      <ProgressGallery
+                        photos={progressPhotos}
+                        isOpen={true}
+                        onClose={() => setCurrentView('landing')}
+                        selectedPhoto={progressView.selectedPhoto}
+                        onSelectPhoto={(photo) => setProgressView({ ...progressView, selectedPhoto: photo })}
+                      />
+                    </div>
+                  </motion.div>
+                )}
 
-        {/* Feedback Bubble */}
-        {selectedCoach && (
-          <FeedbackBubble
-            feedback={currentFeedback}
-            coach={selectedCoach}
-          />
-                 )}
-       </div>
-     </PhoneFrame>
-       )}
-     </>
-   );
- }
+                {currentView === 'reminder-setup' && (
+                  <motion.div
+                    key="reminder-setup"
+                    initial={{ opacity: 0, x: 300 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -300 }}
+                    transition={{ duration: 0.3 }}
+                    className="h-full overflow-hidden"
+                  >
+                    <div className="flex items-center justify-between p-3 border-b border-gray-100 bg-white">
+                      <motion.button
+                        onClick={() => setCurrentView('landing')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-3 py-1.5 bg-pink-200 text-pink-800 border border-pink-300 rounded-full shadow-sm font-medium text-xs"
+                      >
+                        ← Back
+                      </motion.button>
+                      <h2 className="text-lg font-bold text-gray-800">Daily Reminders ⏰</h2>
+                      <div className="w-12"></div>
+                    </div>
+                    <div className="h-full overflow-y-auto">
+                      <ReminderSetup
+                        isOpen={true}
+                        onClose={() => setCurrentView('landing')}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+                </AnimatePresence>
+              </main>
+
+              {/* Feedback Bubble */}
+              {selectedCoach && (
+                <FeedbackBubble
+                  feedback={currentFeedback}
+                  coach={selectedCoach}
+                />
+              )}
+            </div>
+          </PhoneFrame>
+        )}
+      </IonPage>
+    </IonApp>
+  );
+}
 
 export default App;

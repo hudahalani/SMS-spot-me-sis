@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Spot Me Sis!</string>
+    <string name="title_activity_main">Spot Me Sis!</string>
+    <string name="package_name">sms.app</string>
+    <string name="custom_url_scheme">sms.app</string>
+</resources>

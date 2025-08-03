@@ -1,0 +1,12 @@
+{
+  "name": "spot me sis",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react",
+  "id": "7a46fc48",
+  "build": {
+    "script": "npm run build"
+  },
+  "webDir": "dist"
+}
